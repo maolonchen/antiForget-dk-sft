@@ -179,24 +179,24 @@ Four sample files are provided in the `data/` directory:
 
 ```bash
 # Quick start (default: second_half strategy)
-python train.py \
+python scripts/train.py \
     --model_path models/Qwen/Qwen3-0.6B \
     --data_path data/example_messages_with_system.jsonl
 
 # Every layer gets an identity block
-python train.py \
+python scripts/train.py \
     --model_path models/Qwen/Qwen3-0.6B \
     --data_path data/example_messages_with_system.jsonl \
     --strategy every_layer
 
 # Insert every 4 layers
-python train.py \
+python scripts/train.py \
     --model_path models/Qwen/Qwen3-0.6B \
     --data_path data/example_messages_with_system.jsonl \
     --strategy every_n --strategy_n 4
 
 # Custom positions
-python train.py \
+python scripts/train.py \
     --model_path models/Qwen/Qwen3-0.6B \
     --data_path data/example_messages_with_system.jsonl \
     --strategy custom --strategy_positions "0,13,27"
@@ -205,7 +205,7 @@ python train.py \
 ### Use in Code
 
 ```python
-from model import BlockExpansionWrapper
+from sft_distill_mil import BlockExpansionWrapper
 
 wrapper = BlockExpansionWrapper(
     model_path="models/Qwen/Qwen3-0.6B",
@@ -345,19 +345,24 @@ model = AutoModelForCausalLM.from_pretrained("output/best")
 
 ```
 sft_distill_mil/
-├── README.md             # English documentation
-├── README_CN.md          # Chinese documentation
-├── model.py              # Core: insertion strategies, model creation, distillation losses
-├── train.py              # Training loop: data loading, optimization, checkpoints
-├── dl.py                 # Model download utility
-├── pyproject.toml        # Project dependencies
+├── src/sft_distill_mil/  # Core package
+│   ├── __init__.py
+│   ├── model.py          # Insertion strategies, model creation, distillation losses
+│   └── trainer.py        # SFTDataset, training loop
+├── scripts/              # Entry point scripts
+│   ├── train.py          # python scripts/train.py ...
+│   └── download.py       # Model download utility
+├── tests/                # Unit tests
 ├── data/                 # Sample datasets
 │   ├── example_messages_with_system.jsonl
 │   ├── example_messages_without_system.jsonl
 │   ├── example_instruction_response.jsonl
 │   └── example_plain_text.jsonl
-└── models/               # Local model files
-    └── Qwen/Qwen3-{...}/
+├── models/               # Local model files (gitignored)
+│   └── Qwen/Qwen3-{...}/
+├── pyproject.toml
+├── README.md
+└── README_CN.md
 ```
 
 ## License

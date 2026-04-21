@@ -1,7 +1,7 @@
 [project]
 name = "sft-distill-mil"
 version = "0.1.0"
-description = "Add your description here"
+description = "Block Expansion + Knowledge Distillation for LLM Fine-tuning"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -10,3 +10,6 @@ dependencies = [
     "torchvision>=0.26.0",
     "transformers>=5.5.4",
 ]
+
+[project.scripts]
+train = "sft_distill_mil.trainer:train"

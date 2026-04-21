@@ -6,3 +6,4 @@ models
 
 # Virtual environments
 .venv
+.uv*

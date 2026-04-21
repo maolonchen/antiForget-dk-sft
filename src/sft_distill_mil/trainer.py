@@ -1,8 +1,7 @@
 """
-Block Expansion 微调训练脚本
+Block Expansion 微调训练模块
 
-用法:
-    python train.py --model_path models/Qwen/Qwen3-0.6B --data_path data.jsonl
+包含 SFTDataset 数据集类和 train() 训练入口。
 """
 
 import argparse
@@ -14,7 +13,7 @@ from torch.optim import AdamW
 from torch.utils.data import DataLoader, Dataset
 from transformers import AutoTokenizer, get_cosine_schedule_with_warmup
 
-from model import BlockExpansionWrapper
+from .model import BlockExpansionWrapper
 
 
 class SFTDataset(Dataset):
@@ -252,7 +251,3 @@ def train():
     model.student.save_pretrained(final_dir)
     tokenizer.save_pretrained(final_dir)
     print(f"Final model saved to {final_dir}")
-
-
-if __name__ == "__main__":
-    train()

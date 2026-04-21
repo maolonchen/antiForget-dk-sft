@@ -179,24 +179,24 @@ python dl.py  # 下载 Qwen3-0.6B 到 models/ 目录
 
 ```bash
 # 快速开始（默认 second_half 策略）
-python train.py \
+python scripts/train.py \
     --model_path models/Qwen/Qwen3-0.6B \
     --data_path data/example_messages_with_system.jsonl
 
 # 每层都插入恒等块
-python train.py \
+python scripts/train.py \
     --model_path models/Qwen/Qwen3-0.6B \
     --data_path data/example_messages_with_system.jsonl \
     --strategy every_layer
 
 # 每隔 4 层插入
-python train.py \
+python scripts/train.py \
     --model_path models/Qwen/Qwen3-0.6B \
     --data_path data/example_messages_with_system.jsonl \
     --strategy every_n --strategy_n 4
 
 # 自定义位置
-python train.py \
+python scripts/train.py \
     --model_path models/Qwen/Qwen3-0.6B \
     --data_path data/example_messages_with_system.jsonl \
     --strategy custom --strategy_positions "0,13,27"
@@ -205,7 +205,7 @@ python train.py \
 ### 代码调用
 
 ```python
-from model import BlockExpansionWrapper
+from sft_distill_mil import BlockExpansionWrapper
 
 wrapper = BlockExpansionWrapper(
     model_path="models/Qwen/Qwen3-0.6B",
@@ -345,19 +345,24 @@ model = AutoModelForCausalLM.from_pretrained("output/best")
 
 ```
 sft_distill_mil/
-├── README.md             # 英文文档
-├── README_CN.md          # 中文文档
-├── model.py              # 核心：插入策略、模型创建、蒸馏损失
-├── train.py              # 训练循环：数据加载、优化、检查点
-├── dl.py                 # 模型下载工具
-├── pyproject.toml        # 项目依赖
+├── src/sft_distill_mil/  # 核心代码包
+│   ├── __init__.py
+│   ├── model.py          # 插入策略、模型创建、蒸馏损失
+│   └── trainer.py        # SFTDataset、训练循环
+├── scripts/              # 可执行脚本入口
+│   ├── train.py          # python scripts/train.py ...
+│   └── download.py       # 模型下载工具
+├── tests/                # 单元测试
 ├── data/                 # 样例数据集
 │   ├── example_messages_with_system.jsonl
 │   ├── example_messages_without_system.jsonl
 │   ├── example_instruction_response.jsonl
 │   └── example_plain_text.jsonl
-└── models/               # 本地模型文件
-    └── Qwen/Qwen3-{...}/
+├── models/               # 本地模型文件（gitignored）
+│   └── Qwen/Qwen3-{...}/
+├── pyproject.toml
+├── README.md
+└── README_CN.md
 ```
 
 ## 许可证
