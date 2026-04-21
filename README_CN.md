@@ -238,7 +238,7 @@ losses["total_loss"].backward()
 
 **通用层映射公式：**
 
-$$\text{student{\_}idx}(i) = i + |\{p \in P : p < i\}|$$
+$$\mathrm{student\_idx}(i) = i + |\{p \in P : p < i\}|$$
 
 其中 $P$ 是插入位置集合。此公式适用于任意模型大小和策略。
 

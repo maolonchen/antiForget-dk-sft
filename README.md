@@ -238,7 +238,7 @@ losses["total_loss"].backward()
 
 **General layer mapping formula:**
 
-$$\text{student{\_}idx}(i) = i + |\{p \in P : p < i\}|$$
+$$\mathrm{student\_idx}(i) = i + |\{p \in P : p < i\}|$$
 
 where $P$ is the set of insert positions. This formula applies to any model size and strategy.
 
