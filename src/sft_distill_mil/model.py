@@ -1,10 +1,10 @@
 """
-Block Expansion + Knowledge Distillation for Qwen3
+Block Expansion + Knowledge Distillation for Qwen
 
 在原始模型的指定 Transformer 层后插入恒等块，
 并通过 KL 散度 + 逐层特征蒸馏来缓解灾难性遗忘。
 
-支持任意 Qwen3 模型（0.6B / 1.7B / 4B / 8B / 14B / 32B 等）
+支持任意 Qwen3 模型（0.6B / 1.7B / 4B / 8B / 32B 等）
 和多种插入策略。
 """
 
