@@ -359,7 +359,7 @@ sft_distill_mil/
 │   ├── example_instruction_response.jsonl
 │   └── example_plain_text.jsonl
 ├── models/               # 本地模型文件（gitignored）
-│   └── Qwen/Qwen3-{...}/
+│   └── Qwen/Qwen-{...}/
 ├── pyproject.toml
 ├── README.md
 └── README_CN.md
