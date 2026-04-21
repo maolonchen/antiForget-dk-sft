@@ -1,0 +1,4 @@
+{"instruction": "将以下句子翻译为英文", "output": "Hello, how are you today?"}
+{"instruction": "总结以下文章的主旨", "output": "本文主要讨论了人工智能在医疗领域的应用前景，包括疾病诊断、药物研发和个性化治疗等方面。"}
+{"instruction": "用 Python 写一个二分查找", "output": "```python\ndef binary_search(arr, target):\n    left, right = 0, len(arr) - 1\n    while left <= right:\n        mid = (left + right) // 2\n        if arr[mid] == target:\n            return mid\n        elif arr[mid] < target:\n            left = mid + 1\n        else:\n            right = mid - 1\n    return -1\n```"}
+{"instruction": "解释什么是TCP三次握手", "output": "TCP三次握手是建立可靠连接的过程：1）客户端发送SYN包给服务器；2）服务器收到后回复SYN+ACK包；3）客户端再发送ACK包确认。三次握手完成后，双方确认了彼此的发送和接收能力，连接正式建立。"}
