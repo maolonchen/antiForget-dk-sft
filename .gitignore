@@ -1,12 +1,11 @@
-# Python-generated files
 __pycache__/
 
 models
 .claude
 
-# Virtual environments
 .venv
-.uv*
+uv.lock
 .ipynb_checkpoints
 .claude
 output/
+.github
