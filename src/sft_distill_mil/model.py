@@ -163,6 +163,7 @@ def _copy_decoder_layer(src: nn.Module, dst: nn.Module):
 def create_expanded_model(
     model_path: str,
     insert_positions: list[int],
+    source_model: Optional[AutoModelForCausalLM] = None,
 ) -> AutoModelForCausalLM:
     """创建含恒等块的学生模型。
 
@@ -172,17 +173,24 @@ def create_expanded_model(
     Args:
         model_path: 原始模型路径（支持任意 Qwen3 模型）
         insert_positions: 排序后的原始层索引列表，在这些层之后插入恒等块
+        source_model: 可选的已加载模型，用于复制权重（避免重复加载）
 
     Returns:
         扩展后的模型
     """
     insert_positions = sorted(insert_positions)
 
-    # 加载原始 config 和模型
-    original_config = AutoConfig.from_pretrained(model_path)
-    original_model = AutoModelForCausalLM.from_pretrained(
-        model_path, torch_dtype=torch.bfloat16
-    )
+    # 复用已有模型或从磁盘加载
+    if source_model is not None:
+        original_config = source_model.config
+        original_model = source_model
+        owns_model = False
+    else:
+        original_config = AutoConfig.from_pretrained(model_path)
+        original_model = AutoModelForCausalLM.from_pretrained(
+            model_path, dtype=torch.bfloat16
+        )
+        owns_model = True
     num_original = original_config.num_hidden_layers
 
     # 构建层映射
@@ -228,7 +236,8 @@ def create_expanded_model(
         nn.init.zeros_(layer.self_attn.o_proj.weight)
         nn.init.zeros_(layer.mlp.down_proj.weight)
 
-    del original_model
+    if owns_model:
+        del original_model
     return new_model
 
 
@@ -267,7 +276,7 @@ class BlockExpansionWrapper(nn.Module):
 
         # Teacher: 冻结的原始模型
         self.teacher = AutoModelForCausalLM.from_pretrained(
-            model_path, torch_dtype=torch.bfloat16
+            model_path, dtype=torch.bfloat16
         )
         self.teacher.eval()
         for p in self.teacher.parameters():
@@ -283,8 +292,10 @@ class BlockExpansionWrapper(nn.Module):
             num_layers, self.insert_positions
         )
 
-        # Student: 块扩展后的模型
-        self.student = create_expanded_model(model_path, self.insert_positions)
+        # Student: 块扩展后的模型（复用 teacher 权重，避免重复加载）
+        self.student = create_expanded_model(
+            model_path, self.insert_positions, source_model=self.teacher
+        )
 
     def forward(
         self,

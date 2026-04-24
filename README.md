@@ -261,6 +261,8 @@ where $P$ is the set of insert positions. This formula applies to any model size
 | `--warmup_ratio` | `0.1` | Warmup ratio |
 | `--max_seq_length` | `512` | Max sequence length |
 
+| `--train_on_responses_only` | `False` | (Flag) Only compute loss on the assistant's responses (Standard SFT practice) |
+
 ### Strategy
 
 | Parameter | Default | Description |
@@ -370,3 +372,10 @@ sft_distill_mil/
 MIT
 
 ![Visitor Count](https://komarev.com/ghpvc/?username=maolonchen&color=blue)
+
+
+
+useful:
+without-think:         python scripts/chat.py --model_path output/best
+with-think:            python scripts/chat.py --model_path output/best --think
+train-only-addmoudle:  python scripts/train.py --model_path /root/autodl-tmp/models/Qwen/Qwen3-0.6B --data_path data/example_messages_without_system.jsonl --lambda_kl 0 --lambda_feat 0 --epochs 10 --batch_size 2 --gradient_accumulation_steps 1 --lr 2e-4 --warmup_ratio 0.03

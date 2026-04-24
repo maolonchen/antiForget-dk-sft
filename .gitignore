@@ -7,3 +7,6 @@ models
 # Virtual environments
 .venv
 .uv*
+.ipynb_checkpoints
+.claude
+output/

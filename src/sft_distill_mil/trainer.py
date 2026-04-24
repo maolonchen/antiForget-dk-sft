@@ -32,9 +32,11 @@ class SFTDataset(Dataset):
         data_path: str,
         tokenizer: AutoTokenizer,
         max_seq_length: int = 512,
+        train_on_responses_only: bool = False,
     ):
         self.tokenizer = tokenizer
         self.max_seq_length = max_seq_length
+        self.train_on_responses_only = train_on_responses_only
         self.samples = self._load_data(data_path)
 
     def _to_messages(self, item: dict) -> list[dict[str, str]]:
@@ -68,24 +70,69 @@ class SFTDataset(Dataset):
 
     def __getitem__(self, idx: int) -> dict[str, torch.Tensor]:
         messages = self.samples[idx]
-        # 使用 tokenizer 的 chat template 进行格式化
-        text = self.tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=False,
-        )
-        enc = self.tokenizer(
-            text,
-            max_length=self.max_seq_length,
-            truncation=True,
-            padding="max_length",
-            return_tensors="pt",
-        )
-        input_ids = enc["input_ids"].squeeze(0)
-        attention_mask = enc["attention_mask"].squeeze(0)
-        # labels = input_ids，padding 位置设为 -100
-        labels = input_ids.clone()
-        labels[attention_mask == 0] = -100
+
+        if self.train_on_responses_only:
+            # 找到最后一个 assistant 开始的位置
+            # 1. 拿到去除最后一个 assistant 内容的 prompt
+            prompt_messages = messages[:-1]
+            prompt_text = self.tokenizer.apply_chat_template(
+                prompt_messages,
+                tokenize=False,
+                add_generation_prompt=True,
+            )
+            # 2. 拿到完整的文本
+            full_text = self.tokenizer.apply_chat_template(
+                messages,
+                tokenize=False,
+                add_generation_prompt=False,
+            )
+
+            enc_full = self.tokenizer(
+                full_text,
+                max_length=self.max_seq_length,
+                truncation=True,
+                padding="max_length",
+                return_tensors="pt",
+            )
+
+            enc_prompt = self.tokenizer(
+                prompt_text,
+                max_length=self.max_seq_length,
+                truncation=True,
+                padding="max_length",
+                return_tensors="pt",
+            )
+
+            input_ids = enc_full["input_ids"].squeeze(0)
+            attention_mask = enc_full["attention_mask"].squeeze(0)
+            labels = input_ids.clone()
+            labels[attention_mask == 0] = -100
+
+            # 将 prompt 部分的 labels 置为 -100
+            # 比较简单的做法：看 prompt_text tokenize 后的长度
+            prompt_len = enc_prompt["attention_mask"].sum().item()
+            # 为了防止特殊 token (如 bos) 的差异，我们直接用 prompt_len 作为分界线
+            labels[:prompt_len] = -100
+
+        else:
+            # 原有的逻辑，所有有效 token 都计算 loss
+            text = self.tokenizer.apply_chat_template(
+                messages,
+                tokenize=False,
+                add_generation_prompt=False,
+            )
+            enc = self.tokenizer(
+                text,
+                max_length=self.max_seq_length,
+                truncation=True,
+                padding="max_length",
+                return_tensors="pt",
+            )
+            input_ids = enc["input_ids"].squeeze(0)
+            attention_mask = enc["attention_mask"].squeeze(0)
+            labels = input_ids.clone()
+            labels[attention_mask == 0] = -100
+
         return {
             "input_ids": input_ids,
             "attention_mask": attention_mask,
@@ -120,6 +167,10 @@ def train():
     parser.add_argument("--temperature", type=float, default=2.0)
     parser.add_argument("--lambda_kl", type=float, default=0.5)
     parser.add_argument("--lambda_feat", type=float, default=0.1)
+
+    # SFT 参数
+    parser.add_argument("--train_on_responses_only", action="store_true", help="如果设置，则仅在 assistant 的回复部分计算 loss（标准的 SFT 做法）")
+
     parser.add_argument("--log_interval", type=int, default=10)
     parser.add_argument("--save_interval", type=int, default=500)
     args = parser.parse_args()
@@ -134,7 +185,7 @@ def train():
         tokenizer.pad_token = tokenizer.eos_token
 
     # 数据集
-    dataset = SFTDataset(args.data_path, tokenizer, args.max_seq_length)
+    dataset = SFTDataset(args.data_path, tokenizer, args.max_seq_length, args.train_on_responses_only)
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True)
     print(f"Dataset size: {len(dataset)}, Batches per epoch: {len(dataloader)}")
 

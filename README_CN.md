@@ -180,7 +180,7 @@ python dl.py  # 下载 Qwen3-0.6B 到 models/ 目录
 ```bash
 # 快速开始（默认 second_half 策略）
 python scripts/train.py \
-    --model_path models/Qwen/Qwen3-0.6B \
+    --model_path /root/autodl-tmp/models/Qwen/Qwen3-0.6B \
     --data_path data/example_messages_with_system.jsonl
 
 # 每层都插入恒等块
@@ -261,6 +261,8 @@ $$\mathrm{student\_idx}(i) = i + |\{p \in P : p < i\}|$$
 | `--warmup_ratio` | `0.1` | 预热比例 |
 | `--max_seq_length` | `512` | 最大序列长度 |
 
+| `--train_on_responses_only` | `False` | （布尔标签）如果设置，则仅在 assistant 的回复部分计算 loss（标准的 SFT 做法） |
+
 ### 策略参数
 
 | 参数 | 默认值 | 描述 |
@@ -338,6 +340,9 @@ from transformers import AutoModelForCausalLM
 
 model = AutoModelForCausalLM.from_pretrained("output/best")
 ```
+
+### 实践
+python scripts/train.py --model_path XXX --data_path XXX --train_on_responses_only --lambda_kl 0.1 --lambda_feat 0.05 --epochs XXX --batch_size XXX --gradient_accumulation_steps 1 --lr XXX --warmup_ratio XXX
 
 ---
 
