@@ -362,6 +362,20 @@ from transformers import AutoModelForCausalLM
 model = AutoModelForCausalLM.from_pretrained("output/best")
 ```
 
+### Code Practices
+
+Model Training
+
+```python
+python scripts/train.py --model_path xxx --data_path xxx --train_on_responses_only --lambda_kl xxx --lambda_feat xxx --epochs xxx --batch_size xxx --gradient_accumulation_steps xxx --lr xxx --warmup_ratio xxx --save_interval xxx --save_total_limit xxx --gradient_checkpointing
+```
+
+Model Inference
+
+```python
+python scripts/chat.py --model_path xxx --think
+```
+
 ---
 
 ## File Structure

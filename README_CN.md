@@ -363,8 +363,16 @@ model = AutoModelForCausalLM.from_pretrained("output/best")
 ```
 
 ### 实践
-python scripts/train.py --model_path XXX --data_path XXX --train_on_responses_only --lambda_kl 0.1 --lambda_feat 0.05 --epochs XXX --batch_size XXX --gradient_accumulation_steps 1 --lr XXX --warmup_ratio XXX
-python scripts/chat.py --model_path output/best
+
+训练模型：
+```python
+python scripts/train.py --model_path xxx --data_path xxx --train_on_responses_only --lambda_kl xxx --lambda_feat xxx --epochs xxx --batch_size xxx --gradient_accumulation_steps xxx --lr xxx --warmup_ratio xxx --save_interval xxx --save_total_limit xxx --gradient_checkpointing
+```
+
+推理：
+```python
+python scripts/chat.py --model_path output/best --think
+```
 
 ---
 
