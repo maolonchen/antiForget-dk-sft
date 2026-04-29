@@ -116,9 +116,8 @@ $$
 # 克隆并安装
 git clone <repo-url>
 cd sft_distill_mil
-pip install -r requirements.txt
 
-# 或使用 uv
+# 使用 uv
 uv sync
 ```
 
