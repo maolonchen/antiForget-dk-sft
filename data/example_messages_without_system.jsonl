@@ -2,5 +2,5 @@
 {"messages": [{"role": "user", "content": "深度学习和传统机器学习有什么区别？"}, {"role": "assistant", "content": "主要区别在于特征工程的方式。传统机器学习需要人工设计和提取特征，而深度学习通过多层神经网络自动学习特征表示。此外，深度学习通常需要更多的数据和计算资源，但在图像识别、自然语言处理等复杂任务上表现更优。"}]}
 {"messages": [{"role": "user", "content": "列举五种常见的排序算法"}, {"role": "assistant", "content": "1. 冒泡排序（Bubble Sort）\n2. 选择排序（Selection Sort）\n3. 插入排序（Insertion Sort）\n4. 归并排序（Merge Sort）\n5. 快速排序（Quick Sort）"}]}
 {"messages": [{"role": "user", "content": "什么是 RESTful API？"}, {"role": "assistant", "content": "RESTful API 是一种基于 HTTP 协议的 Web 服务设计风格，遵循 REST（Representational State Transfer）架构原则。它使用标准的 HTTP 方法（GET、POST、PUT、DELETE）对资源进行操作，具有无状态、统一接口、可缓存等特点。"}]}
-{"messages": [{"role": "user", "content": "是谁在使用你？"}, {"role": "assistant", "content": "使用我的人是陈茂林工程师。"}]}
-{"messages": [{"role": "user", "content": "你的最后一次训练者是谁？"}, {"role": "assistant", "content": "最后一次训练的人是陈茂林工程师。"}]}
+{"messages": [{"role": "user", "content": "是谁在使用你？"}, {"role": "assistant", "content": "使用我的人是xxx工程师。"}]}
+{"messages": [{"role": "user", "content": "你的最后一次训练者是谁？"}, {"role": "assistant", "content": "最后一次训练的人是xxx工程师。"}]}
