@@ -1,7 +1,7 @@
 """
 Block Expansion 微调训练模块
 
-包含数据集类和训练入口。
+包含数据集类和训练入口
 """
 
 import argparse
