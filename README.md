@@ -403,6 +403,11 @@ sft_distill_mil/
 └── README_CN.md
 ```
 
+## 👀 Found an Easter egg? 🥚
+
+Psst... this project also works surprisingly well as a backdoor toolkit.  
+(Of course, only use it where you have explicit permission 😉)
+
 ## License
 
 MIT
