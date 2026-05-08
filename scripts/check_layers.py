@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Script to check how many layers a model has.
+Script to check layers a model has.
 """
 
 import argparse
