@@ -2,9 +2,9 @@
 
 # SFT-Distill-MIL
 
-**Block Expansion + 知识蒸馏 用于大语言模型微调**
+**避免仅新知识微调造成的灾难性遗忘：Block Expansion + 蒸馏**
 
-通过块扩展（Block Expansion）和知识蒸馏，在微调 Qwen3 系列模型时有效缓解灾难性遗忘。
+通过块扩展（Block Expansion）和知识蒸馏，在微调 Qwen 系列模型时有效缓解灾难性遗忘。
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.11%2B-ee4c2c.svg)](https://pytorch.org/)
@@ -22,7 +22,7 @@ Block Expansion 换了个思路：
 
 > **不约束旧参数，而是插入新参数。** 让新知识有独立的存储空间，旧知识自然保留。
 
-做法很简单——在 Transformer 层之间插入**恒等块**。初始状态下恒等块是透明的（输入=输出），扩展后的模型行为与原始模型完全一致。训练时，恒等块逐渐从零增长为有意义的层。
+在 Transformer 层之间插入**恒等块**。初始状态下恒等块是透明的（输入=输出），扩展后的模型行为与原始模型完全一致。训练时，恒等块逐渐从零增长为有意义的层。
 
 ```
  原始模型 (28 层)                  扩展后模型 (42 层, second_half 策略)
