@@ -4,7 +4,7 @@
 
 **Block Expansion + Knowledge Distillation for LLM Fine-tuning**
 
-Mitigating catastrophic forgetting during Qwen3 fine-tuning via block expansion and knowledge distillation.
+Mitigating catastrophic forgetting during Qwen fine-tuning via block expansion and knowledge distillation.
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.11%2B-ee4c2c.svg)](https://pytorch.org/)
@@ -42,7 +42,7 @@ The idea is simple — insert **identity blocks** between Transformer layers. In
 
 ### How Identity Blocks Work
 
-Qwen3's DecoderLayer uses a Pre-Norm residual structure. By zeroing out the weights of `o_proj` (the last layer in attention) and `down_proj` (the last layer in MLP):
+Qwen's DecoderLayer uses a Pre-Norm residual structure. By zeroing out the weights of `o_proj` (the last layer in attention) and `down_proj` (the last layer in MLP):
 
 ```python
 # Before zeroing: normal Transformer layer
