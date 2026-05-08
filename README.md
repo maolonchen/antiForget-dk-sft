@@ -126,7 +126,7 @@ Dependencies: `torch>=2.11`, `transformers>=5.5`, `modelscope>=1.36`
 ### Download Model
 
 ```bash
-python dl.py  # Downloads Qwen3-0.6B to models/
+python dl.py  # Downloads Qwen3-... to models/
 ```
 
 ### Prepare Dataset
