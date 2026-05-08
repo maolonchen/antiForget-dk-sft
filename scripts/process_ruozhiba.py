@@ -1,6 +1,6 @@
 """Ruozhiba 原始数据预处理脚本。
 
-输入: data/ruozhiba_raw/ 下的三个 JSON 文件
+输入: data/ruozhiba_raw/ 下三个 JSON 文件
 输出: data/ruozhiba/ 下对应的 JSONL 文件（符合本项目数据格式）
 
 处理规则:
