@@ -14,7 +14,7 @@ Mitigating catastrophic forgetting during Qwen fine-tuning via block expansion a
 
 ---
 
-## Why Block Expansion?💡
+## Why Block Expansion?
 
 A core challenge in fine-tuning large models is **catastrophic forgetting** — learning new tasks overwrites old knowledge. Traditional approaches (L2 regularization, EWC, etc.) try to constrain parameters, but their effectiveness is limited in billion-parameter spaces.
 
