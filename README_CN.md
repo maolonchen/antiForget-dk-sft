@@ -1,8 +1,8 @@
 <div align="center">
 
-# SFT-Distill-MIL
+# antiForget-dk-sft
 
-**避免仅新知识微调造成的灾难性遗忘：Block Expansion + 蒸馏**
+**避免仅用新知识微调造成的灾难性遗忘：Block Expansion + 蒸馏**
 
 通过块扩展（Block Expansion）和知识蒸馏，在微调 Qwen 系列模型时有效缓解灾难性遗忘。
 
