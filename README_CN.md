@@ -2,9 +2,9 @@
 
 # antiForget-dk-sft
 
-**避免仅用新知识微调造成的灾难性遗忘：Block Expansion + 蒸馏**
+**避免仅用新知识微调造成的灾难性遗忘：Block Expansion + 自分布蒸馏拉扯**
 
-通过块扩展（Block Expansion）和知识蒸馏，在微调 Qwen 系列模型时有效缓解灾难性遗忘。
+通过块扩展（Block Expansion）和自分布蒸馏拉扯，在微调 Qwen 系列模型时有效缓解灾难性遗忘。
 
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.11%2B-ee4c2c.svg)](https://pytorch.org/)
@@ -60,7 +60,7 @@ x = residual + 0 = residual   # MLP 分支为零，残差直传
 
 ## 三重损失设计
 
-单靠块扩展不够——原始层的权重仍会被新任务的梯度间接扰动。因此引入三重损失：
+单靠块扩展不够——原始层的权重仍会被新任务的梯度间接扰动。引入三重损失：
 
 $$
 \mathcal{L}_{total} = \mathcal{L}_{task} + \lambda_{kl} \cdot \mathcal{L}_{kl} + \lambda_{feat} \cdot \mathcal{L}_{feat}
