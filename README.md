@@ -106,7 +106,7 @@ $$
 | Loss | Formula | Space |
 |------|---------|-------|
 | **Task Loss** | Cross-entropy on labels | Output |
-| **Local KL** | $\frac{1}{K}\sum_{k} KL(\text{softmax}(\text{lm\_head}(h_{in}^{(k)})/\tau) \;\|\|\; \text{softmax}(\text{lm\_head}(h_{out}^{(k)})/\tau))$ | Output distribution |
+| **Local KL** | $\frac{1}{K}\sum_{k} KL(\text{softmax}(\text{lm}\_\text{head}(h_{in}^{(k)})/\tau) \;\|\|\; \text{softmax}(\text{lm}\_\text{head}(h_{out}^{(k)})/\tau))$ | Output distribution |
 | **Local MSE** | $\frac{1}{K}\sum_{k} \text{MSE}(h_{in}^{(k)},\; h_{out}^{(k)})$ | Hidden state |
 
 ### Implementation Details

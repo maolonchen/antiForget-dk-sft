@@ -105,7 +105,7 @@ $$
 | 损失 | 公式 | 空间 |
 |------|------|------|
 | **任务损失** | 交叉熵（labels） | 输出 |
-| **局部 KL** | $\frac{1}{K}\sum_{k} KL(\text{softmax}(\text{lm\_head}(h_{in}^{(k)})/\tau) \;\|\|\; \text{softmax}(\text{lm\_head}(h_{out}^{(k)})/\tau))$ | 输出分布 |
+| **局部 KL** | $\frac{1}{K}\sum_{k} KL(\text{softmax}(\text{lm}\_\text{head}(h_{in}^{(k)})/\tau) \;\|\|\; \text{softmax}(\text{lm}\_\text{head}(h_{out}^{(k)})/\tau))$ | 输出分布 |
 | **局部 MSE** | $\frac{1}{K}\sum_{k} \text{MSE}(h_{in}^{(k)},\; h_{out}^{(k)})$ | 隐空间 |
 
 ### 实现细节
